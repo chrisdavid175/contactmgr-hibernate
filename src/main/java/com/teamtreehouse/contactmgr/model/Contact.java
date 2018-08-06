@@ -25,7 +25,7 @@ public class Contact {
 
     @Override
     public String toString() {
-        return "Contact{" +
+        return "com.teamtreehouse.contactmgr.model.Contact{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
