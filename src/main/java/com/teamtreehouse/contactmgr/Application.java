@@ -1,8 +1,10 @@
 package com.teamtreehouse.contactmgr;
 
+import com.teamtreehouse.contactmgr.model.Contact;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.mapping.MetadataSource;
+import org.hibernate.boot.MetadataSources;
 import org.hibernate.service.ServiceRegistry;
 
 public class Application {
@@ -12,10 +14,27 @@ public class Application {
     private static SessionFactory buildSessionFactory() {
         // Create a StandardServiceRegistry
         final ServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-        return new MetadataSource(registry).buildMetadata().buildSessionFactory();
+        return new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
     public static void main(String[] args) {
+        Contact contact = new Contact.ContactBuilder("Chris","David")
+                .withEmail("chrisdavid175@gmail.com")
+                .withPhone(8586036782L)
+                .build();
+        // Open a session
+        Session session = sessionFactory.openSession();
 
+        // Begin a transaction
+        session.beginTransaction();
+
+        // Use the session to save the contact
+        session.save(contact);
+
+        // Commit the transaction
+        session.getTransaction().commit();
+
+        // Close the session
+        session.close();
     }
 }
